@@ -47,12 +47,22 @@ const formatPrice = (price) => {
     >
         <!-- Image Container -->
         <div class="relative aspect-[3/4] bg-black overflow-hidden">
+            <!-- Primary Image -->
             <img
-                v-if="displayImage"
-                :src="displayImage"
+                v-if="primaryImage"
+                :src="primaryImage"
                 :alt="product.name"
-                class="w-full h-full object-cover transition-opacity duration-300"
-                :class="{ 'opacity-0': !displayImage }"
+                class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out"
+                :class="{ 'opacity-0': isHovering && images.length > 1 }"
+            />
+            
+            <!-- Secondary Image (on hover) -->
+            <img
+                v-if="secondaryImage && images.length > 1"
+                :src="secondaryImage"
+                :alt="product.name"
+                class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out"
+                :class="{ 'opacity-0': !isHovering }"
             />
             
             <!-- Out of Stock Badge -->
@@ -66,7 +76,7 @@ const formatPrice = (price) => {
 
         <!-- Product Info -->
         <div class="pt-3 pb-4 px-3 bg-black">
-            <h3 class="font-heading text-sm uppercase tracking-tight text-white mb-1 line-clamp-1">
+            <h3 class="font-['OCR_A'] text-sm uppercase tracking-tight text-white mb-1 line-clamp-1">
                 {{ product.name }}
             </h3>
             <p class="text-xs text-[#999999] uppercase tracking-wide">

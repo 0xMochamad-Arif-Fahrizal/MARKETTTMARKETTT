@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Order;
 use App\Services\CartService;
 use App\Services\OrderService;
 use App\Services\PaymentService;
@@ -91,7 +92,33 @@ class CheckoutController extends Controller
                 abort(403);
             }
 
+            // Check if user has a pending payment order
+            $pendingOrder = Order::where('user_id', $request->user()->id)
+                ->where('status', 'pending_payment')
+                ->with(['items.variant.product', 'user'])
+                ->latest()
+                ->first();
+
+            // If pending order exists and has items, use it instead of creating new one
+            if ($pendingOrder && $pendingOrder->items->count() > 0 && $pendingOrder->total > 0) {
+                $snapToken = $this->paymentService->createSnapToken($pendingOrder);
+
+                return response()->json([
+                    'success' => true,
+                    'snap_token' => $snapToken,
+                    'order_number' => $pendingOrder->order_number,
+                ]);
+            }
+
             $cart = $this->cartService->getCart($request);
+            $cartData = $this->cartService->getTotal($cart);
+
+            // Validate cart is not empty
+            if ($cartData['item_count'] === 0) {
+                return response()->json([
+                    'error' => 'Your cart is empty',
+                ], 400);
+            }
 
             // Free shipping data
             $shipping = [

@@ -11,6 +11,7 @@ const selectedImageIndex = ref(0);
 const selectedVariant = ref(null);
 const quantity = ref(1);
 const sizeGuideOpen = ref(false);
+const isTransitioning = ref(false);
 
 const images = computed(() => props.product.images || []);
 const variants = computed(() => props.product.variants || []);
@@ -24,6 +25,33 @@ const availableColors = computed(() => {
     const size = selectedVariant.value.size;
     return variants.value.filter(v => v.size === size);
 });
+
+const canGoPrev = computed(() => selectedImageIndex.value > 0);
+const canGoNext = computed(() => selectedImageIndex.value < images.value.length - 1);
+
+const goToPrevImage = () => {
+    if (canGoPrev.value && !isTransitioning.value) {
+        isTransitioning.value = true;
+        setTimeout(() => {
+            selectedImageIndex.value--;
+            setTimeout(() => {
+                isTransitioning.value = false;
+            }, 400);
+        }, 50);
+    }
+};
+
+const goToNextImage = () => {
+    if (canGoNext.value && !isTransitioning.value) {
+        isTransitioning.value = true;
+        setTimeout(() => {
+            selectedImageIndex.value++;
+            setTimeout(() => {
+                isTransitioning.value = false;
+            }, 400);
+        }, 50);
+    }
+};
 
 const selectSize = (size) => {
     const variant = variants.value.find(v => v.size === size && v.stock > 0);
@@ -76,14 +104,50 @@ if (variants.value.length > 0) {
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                     <!-- Image Gallery -->
                     <div>
-                        <!-- Main Image -->
-                        <div class="aspect-[3/4] bg-[#0f0f0f] mb-4">
-                            <img
-                                v-if="images[selectedImageIndex]"
-                                :src="images[selectedImageIndex].image_url"
-                                :alt="product.name"
-                                class="w-full h-full object-cover"
-                            />
+                        <!-- Main Image with Navigation Arrows -->
+                        <div class="relative aspect-[3/4] bg-[#0f0f0f] mb-4 overflow-hidden group">
+                            <!-- All images stacked with fade transition -->
+                            <div
+                                v-for="(image, index) in images"
+                                :key="image.id"
+                                class="absolute inset-0 transition-opacity duration-500 ease-in-out"
+                                :class="{ 'opacity-0': selectedImageIndex !== index, 'opacity-100': selectedImageIndex === index }"
+                            >
+                                <img
+                                    :src="image.image_url"
+                                    :alt="`${product.name} ${index + 1}`"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+
+                            <!-- Previous Arrow -->
+                            <button
+                                v-if="canGoPrev"
+                                @click="goToPrevImage"
+                                class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+                                aria-label="Previous image"
+                            >
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+
+                            <!-- Next Arrow -->
+                            <button
+                                v-if="canGoNext"
+                                @click="goToNextImage"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 z-10"
+                                aria-label="Next image"
+                            >
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+
+                            <!-- Image Counter -->
+                            <div class="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 text-xs uppercase tracking-wide z-10">
+                                {{ selectedImageIndex + 1 }} / {{ images.length }}
+                            </div>
                         </div>
 
                         <!-- Thumbnail Row -->
@@ -112,12 +176,12 @@ if (variants.value.length > 0) {
                         </p>
 
                         <!-- Product Name -->
-                        <h1 class="text-4xl md:text-5xl font-heading uppercase tracking-tight mb-4">
+                        <h1 class="text-4xl md:text-5xl font-['OCR_A'] uppercase tracking-tight mb-4">
                             {{ product.name }}
                         </h1>
 
                         <!-- Price -->
-                        <p class="text-2xl font-heading uppercase tracking-tight mb-8">
+                        <p class="text-2xl font-['OCR_A'] uppercase tracking-tight mb-8">
                             {{ selectedVariant ? formatPrice(selectedVariant.price) : formatPrice(product.base_price) }}
                         </p>
 

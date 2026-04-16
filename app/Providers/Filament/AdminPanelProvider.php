@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('StyleU Admin')
+            ->brandName('MARKETTTMARKETTT')
             ->colors([
                 'primary' => Color::Zinc,
             ])

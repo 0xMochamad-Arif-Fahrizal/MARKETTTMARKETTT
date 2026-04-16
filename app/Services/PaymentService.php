@@ -29,6 +29,23 @@ class PaymentService
     public function createSnapToken(Order $order): string
     {
         try {
+            // Ensure order has items loaded
+            if (!$order->relationLoaded('items')) {
+                $order->load('items.variant.product');
+            }
+
+            // Ensure user is loaded
+            if (!$order->relationLoaded('user')) {
+                $order->load('user');
+            }
+
+            $itemDetails = $this->getItemDetails($order);
+
+            // Validate that we have items
+            if (empty($itemDetails)) {
+                throw new \Exception('Order has no items');
+            }
+
             $params = [
                 'transaction_details' => [
                     'order_id' => $order->order_number,
@@ -39,7 +56,7 @@ class PaymentService
                     'email' => $order->user->email,
                     'phone' => $order->shipping_address_snapshot['phone'] ?? '',
                 ],
-                'item_details' => $this->getItemDetails($order),
+                'item_details' => $itemDetails,
                 'enabled_payments' => [
                     'credit_card',
                     'bca_va',
@@ -53,6 +70,12 @@ class PaymentService
                 ],
             ];
 
+            Log::info('Creating Midtrans Snap Token', [
+                'order_number' => $order->order_number,
+                'gross_amount' => $order->total,
+                'items_count' => count($itemDetails),
+            ]);
+
             $snapToken = Snap::getSnapToken($params);
             
             return $snapToken;
@@ -60,6 +83,10 @@ class PaymentService
         } catch (\Exception $e) {
             Log::error('Midtrans Snap Token Error', [
                 'order_id' => $order->id,
+                'order_number' => $order->order_number,
+                'total' => $order->total,
+                'items_loaded' => $order->relationLoaded('items'),
+                'items_count' => $order->items->count(),
                 'error' => $e->getMessage(),
             ]);
             throw new \Exception('Gagal membuat token pembayaran: ' . $e->getMessage());
@@ -78,6 +105,15 @@ class PaymentService
 
         // Add order items
         foreach ($order->items as $item) {
+            // Skip if variant or product is not loaded
+            if (!$item->variant || !$item->variant->product) {
+                Log::warning('Order item missing variant or product', [
+                    'order_id' => $order->id,
+                    'item_id' => $item->id,
+                ]);
+                continue;
+            }
+
             $items[] = [
                 'id' => $item->product_variant_id,
                 'price' => (int) $item->unit_price,

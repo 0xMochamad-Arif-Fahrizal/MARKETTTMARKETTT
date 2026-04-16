@@ -136,7 +136,7 @@ const cancelOrder = () => {
     <AppLayout>
         <div class="min-h-screen bg-black text-white">
             <!-- Header -->
-            <div class="border-b border-[#1a1a1a]">
+            <div>
                 <div class="max-w-7xl mx-auto px-4 py-6">
                     <Link href="/orders" class="text-[#999999] hover:text-white transition-colors uppercase tracking-wide text-sm mb-2 inline-block">
                         ← Back to Orders
@@ -212,7 +212,7 @@ const cancelOrder = () => {
                                     <p class="font-medium">{{ order.shipping_courier }}</p>
                                     <p class="text-[#999999]">Cost: {{ formatPrice(order.shipping_cost) }}</p>
                                     <p v-if="order.tracking_number" class="text-[#999999] mt-2">
-                                        Tracking: <span class="font-mono text-[#999999]">{{ order.tracking_number }}</span>
+                                        Tracking: <span class="font-['OCR_A'] text-[#999999]">{{ order.tracking_number }}</span>
                                     </p>
                                 </div>
                             </div>

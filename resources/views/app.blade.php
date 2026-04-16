@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title inertia>{{ config('app.name', 'StyleU') }}</title>
         
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/images/logo.png">
+        
         <!-- OCR A Extended Font -->
         <style>
             @font-face {

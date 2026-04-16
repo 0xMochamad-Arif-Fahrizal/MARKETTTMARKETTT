@@ -38,6 +38,11 @@ class CategoryResource extends Resource
                     ->required()
                     ->maxLength(120)
                     ->unique(ignoreRecord: true),
+                Forms\Components\TextInput::make('display_order')
+                    ->numeric()
+                    ->default(0)
+                    ->helperText('Lower numbers appear first. Categories with the same order are sorted alphabetically.')
+                    ->required(),
             ]);
     }
 
@@ -45,6 +50,9 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('display_order')
+                    ->label('Order')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
@@ -73,7 +81,7 @@ class CategoryResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('name');
+            ->defaultSort('display_order', 'asc');
     }
 
     public static function getRelations(): array

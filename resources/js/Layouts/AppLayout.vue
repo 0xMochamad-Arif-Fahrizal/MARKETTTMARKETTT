@@ -54,21 +54,26 @@ const toggleUserMenu = () => {
         <FlashMessage />
         
         <!-- Navbar -->
-        <nav class="bg-black border-b border-[#1a1a1a] sticky top-0 z-50">
+        <nav class="bg-transparent border-t-4 border-[#CCFF00] sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
-                    <!-- Logo -->
-                    <Link href="/" class="flex items-center">
-                        <!-- Replace with your logo image -->
-                        <img 
-                            src="/images/logo.png" 
-                            alt="STYLEU" 
-                            class="h-8 w-auto"
-                            @error="$event.target.style.display='none'; $event.target.nextElementSibling.style.display='block'"
-                        />
-                        <!-- Fallback text if logo not found -->
-                        <span class="text-xl font-heading uppercase tracking-wide" style="display: none;">STYLEU</span>
-                    </Link>
+                    <!-- Left Side: Hamburger/X Button (Mobile Only) -->
+                    <div class="flex items-center gap-4">
+                        <button
+                            @click="$emit('toggle-mobile-menu')"
+                            class="lg:hidden p-2 text-[#CCFF00] hover:text-white transition-colors"
+                            aria-label="Toggle menu"
+                        >
+                            <!-- Hamburger icon when closed -->
+                            <svg v-if="!$attrs.mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <!-- X icon when open -->
+                            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
 
                     <!-- Right Side -->
                     <div class="flex items-center space-x-6">

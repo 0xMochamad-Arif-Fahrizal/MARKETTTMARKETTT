@@ -26,9 +26,27 @@ class OrderService
             $subtotal = 0;
             $items = $cart->items()->with('variant.product')->lockForUpdate()->get();
 
+            \Log::info('Creating order', [
+                'cart_id' => $cart->id,
+                'items_count' => $items->count(),
+            ]);
+
+            // Validate we have items
+            if ($items->count() === 0) {
+                throw new \Exception("Cart is empty");
+            }
+
             // Validate stock and calculate subtotal
             foreach ($items as $item) {
                 $variant = $item->variant;
+                
+                if (!$variant) {
+                    throw new \Exception("Product variant not found for cart item {$item->id}");
+                }
+                
+                if (!$variant->product) {
+                    throw new \Exception("Product not found for variant {$variant->id}");
+                }
                 
                 if ($variant->stock < $item->quantity) {
                     throw new \Exception("Stok tidak mencukupi untuk {$variant->product->name} - {$variant->size}");
@@ -39,6 +57,12 @@ class OrderService
 
             $shippingCost = $shippingData['price'];
             $total = $subtotal + $shippingCost;
+
+            \Log::info('Order totals calculated', [
+                'subtotal' => $subtotal,
+                'shipping' => $shippingCost,
+                'total' => $total,
+            ]);
 
             // Generate order number
             $orderNumber = $this->generateOrderNumber();
@@ -65,15 +89,26 @@ class OrderService
                 'midtrans_order_id' => $orderNumber,
             ]);
 
+            \Log::info('Order created', [
+                'order_id' => $order->id,
+                'order_number' => $order->order_number,
+            ]);
+
             // Create order items and reduce stock
             foreach ($items as $item) {
                 $variant = $item->variant;
                 
                 // Create order item
-                $order->items()->create([
+                $orderItem = $order->items()->create([
                     'product_variant_id' => $variant->id,
                     'quantity' => $item->quantity,
                     'unit_price' => $item->price_snapshot,
+                ]);
+
+                \Log::info('Order item created', [
+                    'order_item_id' => $orderItem->id,
+                    'product_variant_id' => $variant->id,
+                    'quantity' => $item->quantity,
                 ]);
 
                 // Reduce stock
@@ -82,6 +117,14 @@ class OrderService
 
             // Clear cart
             $cart->items()->delete();
+
+            // Reload order with items
+            $order->load('items.variant.product', 'user');
+
+            \Log::info('Order completed', [
+                'order_id' => $order->id,
+                'items_count' => $order->items->count(),
+            ]);
 
             return $order;
         });
@@ -126,7 +169,7 @@ class OrderService
     {
         return Order::where('order_number', $orderNumber)
             ->where('user_id', $userId)
-            ->with(['items.variant.product.images'])
+            ->with(['items.variant.product.images', 'user'])
             ->firstOrFail();
     }
 

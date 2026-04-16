@@ -27,7 +27,7 @@ const submit = () => {
                         class="h-20 w-auto"
                         @error="$event.target.style.display='none'; $event.target.nextElementSibling.style.display='block'"
                     />
-                    <h1 class="text-5xl font-heading uppercase tracking-tight" style="display: none;">STYLEU</h1>
+                    <h1 class="text-5xl font-['OCR_A'] uppercase tracking-tight" style="display: none;">STYLEU</h1>
                 </div>
                 <p class="text-sm text-[#999999] uppercase tracking-wide">SIGN IN TO YOUR ACCOUNT</p>
             </div>

@@ -1,0 +1,274 @@
+@import 'tailwindcss';
+
+/* Filament Admin Custom Theme - Corteiz Style */
+
+/* Override Filament default styles */
+:root {
+    --primary: #CCFF00;
+    --gray-950: #000000;
+    --gray-900: #0f0f0f;
+    --gray-800: #1a1a1a;
+    --gray-700: #222222;
+    --gray-600: #333333;
+    --gray-500: #999999;
+}
+
+/* Dark mode colors */
+.dark {
+    --primary: #CCFF00;
+    --gray-950: #000000;
+    --gray-900: #0f0f0f;
+    --gray-800: #1a1a1a;
+    --gray-700: #222222;
+    --gray-600: #333333;
+    --gray-500: #999999;
+}
+
+/* Global styles */
+body {
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+    background-color: #000000 !important;
+    color: #CCFF00 !important;
+}
+
+/* Remove all rounded corners */
+* {
+    border-radius: 0 !important;
+}
+
+/* Sidebar */
+.fi-sidebar {
+    background-color: #0f0f0f !important;
+    border-right: 1px solid #1a1a1a !important;
+}
+
+.fi-sidebar-nav-item {
+    color: #CCFF00 !important;
+    border-radius: 0 !important;
+}
+
+.fi-sidebar-nav-item:hover {
+    background-color: #1a1a1a !important;
+}
+
+.fi-sidebar-nav-item.fi-active {
+    background-color: #222222 !important;
+    border-left: 3px solid #CCFF00 !important;
+}
+
+/* Topbar */
+.fi-topbar {
+    background-color: #0f0f0f !important;
+    border-bottom: 1px solid #1a1a1a !important;
+}
+
+/* Brand name */
+.fi-sidebar-header {
+    color: #CCFF00 !important;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Tables */
+.fi-ta-table {
+    background-color: #0f0f0f !important;
+    border: 1px solid #1a1a1a !important;
+}
+
+.fi-ta-header-cell {
+    background-color: #000000 !important;
+    color: #CCFF00 !important;
+    border-bottom: 1px solid #1a1a1a !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+.fi-ta-row {
+    background-color: #0f0f0f !important;
+    border-bottom: 1px solid #1a1a1a !important;
+    color: #CCFF00 !important;
+}
+
+.fi-ta-row:hover {
+    background-color: #1a1a1a !important;
+}
+
+.fi-ta-cell {
+    color: #CCFF00 !important;
+}
+
+/* Forms */
+.fi-fo-field-wrp {
+    background-color: #0f0f0f !important;
+}
+
+.fi-input {
+    background-color: #000000 !important;
+    border: 1px solid #333333 !important;
+    color: #CCFF00 !important;
+    border-radius: 0 !important;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+.fi-input:focus {
+    border-color: #CCFF00 !important;
+    ring-color: #CCFF00 !important;
+}
+
+.fi-fo-field-wrp-label {
+    color: #CCFF00 !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+/* Buttons */
+.fi-btn {
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+    letter-spacing: 0.05em;
+}
+
+.fi-btn-primary {
+    background-color: #CCFF00 !important;
+    color: #000000 !important;
+    border: 1px solid #CCFF00 !important;
+}
+
+.fi-btn-primary:hover {
+    background-color: #000000 !important;
+    color: #CCFF00 !important;
+}
+
+.fi-btn-secondary {
+    background-color: #000000 !important;
+    color: #CCFF00 !important;
+    border: 1px solid #CCFF00 !important;
+}
+
+.fi-btn-secondary:hover {
+    background-color: #1a1a1a !important;
+}
+
+/* Cards */
+.fi-section {
+    background-color: #0f0f0f !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 0 !important;
+}
+
+.fi-section-header {
+    background-color: #000000 !important;
+    border-bottom: 1px solid #1a1a1a !important;
+}
+
+.fi-section-header-heading {
+    color: #CCFF00 !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+/* Modals */
+.fi-modal {
+    background-color: #0f0f0f !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 0 !important;
+}
+
+.fi-modal-header {
+    background-color: #000000 !important;
+    border-bottom: 1px solid #1a1a1a !important;
+}
+
+.fi-modal-heading {
+    color: #CCFF00 !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+/* Notifications */
+.fi-no {
+    background-color: #0f0f0f !important;
+    border: 1px solid #CCFF00 !important;
+    border-radius: 0 !important;
+    color: #CCFF00 !important;
+}
+
+/* Badges */
+.fi-badge {
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+/* Dropdown */
+.fi-dropdown-list {
+    background-color: #0f0f0f !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 0 !important;
+}
+
+.fi-dropdown-list-item {
+    color: #CCFF00 !important;
+}
+
+.fi-dropdown-list-item:hover {
+    background-color: #1a1a1a !important;
+}
+
+/* Pagination */
+.fi-pagination {
+    color: #CCFF00 !important;
+}
+
+.fi-pagination-item {
+    background-color: #0f0f0f !important;
+    border: 1px solid #333333 !important;
+    color: #CCFF00 !important;
+    border-radius: 0 !important;
+}
+
+.fi-pagination-item:hover {
+    background-color: #1a1a1a !important;
+}
+
+.fi-pagination-item.fi-active {
+    background-color: #CCFF00 !important;
+    color: #000000 !important;
+}
+
+/* Stats */
+.fi-stats-card {
+    background-color: #0f0f0f !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 0 !important;
+}
+
+.fi-stats-card-label {
+    color: #999999 !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+.fi-stats-card-value {
+    color: #CCFF00 !important;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}
+
+/* Login page */
+.fi-simple-page {
+    background-color: #000000 !important;
+}
+
+.fi-simple-main {
+    background-color: #0f0f0f !important;
+    border: 1px solid #1a1a1a !important;
+    border-radius: 0 !important;
+}
+
+.fi-simple-header-heading {
+    color: #CCFF00 !important;
+    text-transform: uppercase;
+    font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+}

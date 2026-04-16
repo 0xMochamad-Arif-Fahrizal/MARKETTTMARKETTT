@@ -47,7 +47,7 @@ const updatePassword = () => {
     <AppLayout>
         <div class="min-h-screen bg-black text-white">
             <!-- Header -->
-            <div class="border-b border-[#1a1a1a]">
+            <div>
                 <div class="max-w-7xl mx-auto px-4 py-6">
                     <h1 class="font-['OCR_A'] text-4xl uppercase tracking-tight">My Profile</h1>
                 </div>

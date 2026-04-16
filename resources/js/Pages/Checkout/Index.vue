@@ -121,9 +121,9 @@ onMounted(() => {
     <AppLayout>
         <div class="min-h-screen bg-black text-white">
             <!-- Header -->
-            <div class="border-b border-[#1a1a1a]">
+            <div>
                 <div class="max-w-7xl mx-auto px-4 py-6">
-                    <h1 class="font-heading text-4xl uppercase tracking-tight">CHECKOUT</h1>
+                    <h1 class="font-['OCR_A'] text-4xl uppercase tracking-tight">CHECKOUT</h1>
                 </div>
             </div>
 
@@ -142,10 +142,10 @@ onMounted(() => {
                                         'border-[#333333] text-[#333333]': currentStep < step.number
                                     }"
                                 >
-                                    <span class="font-heading text-lg">{{ step.number }}</span>
+                                    <span class="font-['OCR_A'] text-lg">{{ step.number }}</span>
                                 </div>
                                 <span 
-                                    class="mt-2 text-xs uppercase tracking-wide font-heading"
+                                    class="mt-2 text-xs uppercase tracking-wide font-['OCR_A']"
                                     :class="{
                                         'text-white': currentStep === step.number,
                                         'text-[#999999]': currentStep > step.number,
@@ -175,13 +175,13 @@ onMounted(() => {
                         <!-- Step 1: Address Selection -->
                         <div v-show="currentStep === 1" class="bg-[#0f0f0f] border border-[#1a1a1a]">
                             <div class="p-6 border-b border-[#1a1a1a]">
-                                <h2 class="font-heading text-2xl uppercase tracking-tight">SELECT SHIPPING ADDRESS</h2>
+                                <h2 class="font-['OCR_A'] text-2xl uppercase tracking-tight">SELECT SHIPPING ADDRESS</h2>
                             </div>
                             
                             <div class="p-6">
                                 <div v-if="addresses.length === 0" class="text-center py-8">
                                     <p class="text-[#999999] mb-4 uppercase tracking-wide text-sm">YOU HAVE NO SAVED ADDRESSES</p>
-                                    <a href="/profile/addresses" class="inline-block bg-white text-black px-8 py-4 uppercase font-heading text-lg tracking-tight hover:bg-[#f0f0f0] transition-colors">
+                                    <a href="/profile/addresses" class="inline-block bg-white text-black px-8 py-4 uppercase font-['OCR_A'] text-lg tracking-tight hover:bg-[#f0f0f0] transition-colors">
                                         ADD ADDRESS
                                     </a>
                                 </div>
@@ -197,7 +197,7 @@ onMounted(() => {
                                         <div class="flex items-start justify-between">
                                             <div class="flex-1">
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span class="font-heading text-lg uppercase tracking-tight">{{ address.label }}</span>
+                                                    <span class="font-['OCR_A'] text-lg uppercase tracking-tight">{{ address.label }}</span>
                                                     <span v-if="address.is_default" class="text-xs px-2 py-1 bg-[#ff0000] text-white uppercase tracking-wide">DEFAULT</span>
                                                 </div>
                                                 <p class="font-medium mb-1">{{ address.recipient_name }}</p>
@@ -222,7 +222,7 @@ onMounted(() => {
                                     <button
                                         @click="nextStep"
                                         :disabled="!canProceedToStep2"
-                                        class="flex-1 bg-white text-black py-4 uppercase font-heading text-xl tracking-tight transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#f0f0f0]"
+                                        class="flex-1 bg-white text-black py-4 uppercase font-['OCR_A'] text-xl tracking-tight transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#f0f0f0]"
                                     >
                                         CONTINUE
                                     </button>
@@ -233,13 +233,13 @@ onMounted(() => {
                         <!-- Step 2: Payment -->
                         <div v-show="currentStep === 2" class="bg-[#0f0f0f] border border-[#1a1a1a]">
                             <div class="p-6 border-b border-[#1a1a1a]">
-                                <h2 class="font-heading text-2xl uppercase tracking-tight">CONFIRM & PAY</h2>
+                                <h2 class="font-['OCR_A'] text-2xl uppercase tracking-tight">CONFIRM & PAY</h2>
                             </div>
                             
                             <div class="p-6 space-y-6">
                                 <!-- Address Summary -->
                                 <div v-if="selectedAddress">
-                                    <h3 class="font-heading text-lg uppercase tracking-tight mb-3">SHIPPING ADDRESS</h3>
+                                    <h3 class="font-['OCR_A'] text-lg uppercase tracking-tight mb-3">SHIPPING ADDRESS</h3>
                                     <div class="bg-black border border-[#333333] p-4">
                                         <p class="font-medium">{{ selectedAddress.recipient_name }}</p>
                                         <p class="text-sm text-[#999999] mt-1">{{ selectedAddress.phone }}</p>
@@ -252,14 +252,14 @@ onMounted(() => {
 
                                 <!-- Shipping Info -->
                                 <div>
-                                    <h3 class="font-heading text-lg uppercase tracking-tight mb-3">SHIPPING</h3>
+                                    <h3 class="font-['OCR_A'] text-lg uppercase tracking-tight mb-3">SHIPPING</h3>
                                     <div class="bg-black border border-[#333333] p-4">
                                         <div class="flex justify-between items-center">
                                             <div>
-                                                <p class="font-heading uppercase tracking-tight">FREE SHIPPING</p>
+                                                <p class="font-['OCR_A'] uppercase tracking-tight">FREE SHIPPING</p>
                                                 <p class="text-sm text-[#999999] uppercase tracking-wide">ESTIMATED: 3-5 BUSINESS DAYS</p>
                                             </div>
-                                            <p class="font-heading text-xl">FREE</p>
+                                            <p class="font-['OCR_A'] text-xl">FREE</p>
                                         </div>
                                     </div>
                                 </div>
@@ -267,14 +267,14 @@ onMounted(() => {
                                 <div class="flex gap-4">
                                     <button
                                         @click="prevStep"
-                                        class="flex-1 border border-white text-white py-4 uppercase font-heading text-xl tracking-tight hover:bg-white hover:text-black transition-colors"
+                                        class="flex-1 border border-white text-white py-4 uppercase font-['OCR_A'] text-xl tracking-tight hover:bg-white hover:text-black transition-colors"
                                     >
                                         BACK
                                     </button>
                                     <button
                                         @click="processPayment"
                                         :disabled="processingPayment"
-                                        class="flex-1 bg-white text-black py-4 uppercase font-heading text-xl tracking-tight transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#f0f0f0]"
+                                        class="flex-1 bg-white text-black py-4 uppercase font-['OCR_A'] text-xl tracking-tight transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#f0f0f0]"
                                     >
                                         {{ processingPayment ? 'PROCESSING...' : 'PAY NOW' }}
                                     </button>
@@ -287,7 +287,7 @@ onMounted(() => {
                     <div class="lg:col-span-1">
                         <div class="bg-[#0f0f0f] border border-[#1a1a1a] lg:sticky lg:top-4">
                             <div class="p-6 border-b border-[#1a1a1a]">
-                                <h2 class="font-heading text-2xl uppercase tracking-tight">ORDER SUMMARY</h2>
+                                <h2 class="font-['OCR_A'] text-2xl uppercase tracking-tight">ORDER SUMMARY</h2>
                             </div>
                             
                             <div class="p-6 space-y-4">
@@ -327,8 +327,8 @@ onMounted(() => {
 
                                 <div class="border-t border-[#1a1a1a] pt-4">
                                     <div class="flex justify-between items-center">
-                                        <span class="font-heading text-xl uppercase tracking-tight">TOTAL</span>
-                                        <span class="font-heading text-2xl">{{ formatPrice(total) }}</span>
+                                        <span class="font-['OCR_A'] text-xl uppercase tracking-tight">TOTAL</span>
+                                        <span class="font-['OCR_A'] text-2xl">{{ formatPrice(total) }}</span>
                                     </div>
                                 </div>
                             </div>

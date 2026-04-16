@@ -53,9 +53,9 @@ const proceedToCheckout = () => {
     <AppLayout>
         <div class="min-h-screen bg-black">
             <!-- Header -->
-            <div class="border-b border-[#1a1a1a]">
+            <div>
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <h1 class="text-4xl md:text-5xl font-heading uppercase tracking-tight mb-2">
+                    <h1 class="text-4xl md:text-5xl font-['OCR_A'] uppercase tracking-tight mb-2">
                         SHOPPING CART
                     </h1>
                     <p class="text-sm text-[#999999] uppercase tracking-wide">
@@ -107,7 +107,7 @@ const proceedToCheckout = () => {
                                         <div class="flex-1 min-w-0">
                                             <Link
                                                 :href="`/products/${item.variant.product.slug}`"
-                                                class="block font-heading text-lg uppercase tracking-tight hover:text-[#999999] transition-colors mb-1"
+                                                class="block font-['OCR_A'] text-lg uppercase tracking-tight hover:text-[#999999] transition-colors mb-1"
                                             >
                                                 {{ item.variant.product.name }}
                                             </Link>
@@ -164,7 +164,7 @@ const proceedToCheckout = () => {
 
                                         <!-- Price -->
                                         <div class="text-right">
-                                            <p class="text-sm font-heading uppercase tracking-tight">
+                                            <p class="text-sm font-['OCR_A'] uppercase tracking-tight">
                                                 {{ formatPrice(item.price_snapshot * item.quantity) }}
                                             </p>
                                             <p v-if="item.quantity > 1" class="text-xs text-[#999999]">
@@ -193,7 +193,7 @@ const proceedToCheckout = () => {
                     <!-- Order Summary -->
                     <div class="lg:col-span-1">
                         <div class="bg-[#0f0f0f] border border-[#1a1a1a] p-6 sticky top-24">
-                            <h2 class="text-xl font-heading uppercase tracking-tight mb-6">
+                            <h2 class="text-xl font-['OCR_A'] uppercase tracking-tight mb-6">
                                 ORDER SUMMARY
                             </h2>
 
@@ -209,8 +209,8 @@ const proceedToCheckout = () => {
                             </div>
 
                             <div class="flex justify-between mb-6">
-                                <span class="text-lg font-heading uppercase tracking-tight">TOTAL</span>
-                                <span class="text-lg font-heading uppercase tracking-tight">{{ formatPrice(cart.subtotal) }}</span>
+                                <span class="text-lg font-['OCR_A'] uppercase tracking-tight">TOTAL</span>
+                                <span class="text-lg font-['OCR_A'] uppercase tracking-tight">{{ formatPrice(cart.subtotal) }}</span>
                             </div>
 
                             <button

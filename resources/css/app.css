@@ -5,9 +5,41 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@font-face {
+    font-family: 'OCR_A';
+    src: url('/fonts/OCRA.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@layer base {
+    body {
+        background-color: #000000;
+        color: #CCFF00;
+        font-family: 'OCR_A', 'Helvetica Mono', monospace;
+        font-size: 14px;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'OCR_A', 'Helvetica Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #CCFF00;
+    }
+    
+    p, span, div, a, button, input, textarea, select, label {
+        color: #CCFF00;
+    }
+    
+    .font-heading {
+        font-family: 'OCR_A', 'Helvetica Mono', monospace !important;
+    }
+}
+
 @theme {
-    --font-sans: 'Courier New', Courier, monospace;
-    --font-heading: 'Courier New', Courier, monospace;
+    --font-sans: 'OCR_A', 'Helvetica Mono', monospace;
+    --font-heading: 'OCR_A', 'Helvetica Mono', monospace;
+    --font-ocr: 'OCR_A', 'Helvetica Mono', monospace;
     
     --color-black: #000000;
     --color-dark: #0f0f0f;
@@ -16,19 +48,5 @@
     --color-text-muted: #999999;
     --color-accent: #ff0000;
     --color-error: #ff3333;
-}
-
-@layer base {
-    body {
-        background-color: var(--color-black);
-        color: white;
-        font-family: var(--font-sans);
-        font-size: 14px;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-        font-family: var(--font-heading);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
+    --color-stabilo: #CCFF00;
 }

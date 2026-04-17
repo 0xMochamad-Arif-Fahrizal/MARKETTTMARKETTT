@@ -19,6 +19,7 @@ class Product extends Model
         'name',
         'slug',
         'description',
+        'size_guide',
         'category_id',
         'base_price',
         'status',

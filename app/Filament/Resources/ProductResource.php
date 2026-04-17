@@ -58,6 +58,12 @@ class ProductResource extends Resource
                         Forms\Components\RichEditor::make('description')
                             ->columnSpanFull()
                             ->nullable(),
+                        Forms\Components\Textarea::make('size_guide')
+                            ->label('Size Guide')
+                            ->columnSpanFull()
+                            ->rows(5)
+                            ->placeholder('Enter size guide information (e.g., S: Chest 90cm, M: Chest 95cm, L: Chest 100cm)')
+                            ->nullable(),
                     ])
                     ->columns(2),
 

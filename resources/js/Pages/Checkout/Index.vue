@@ -197,10 +197,10 @@ onMounted(() => {
                                         <div class="flex items-start justify-between">
                                             <div class="flex-1">
                                                 <div class="flex items-center gap-2 mb-2">
-                                                    <span class="font-['OCR_A'] text-lg uppercase tracking-tight">{{ address.label }}</span>
+                                                    <span class="font-['OCR_A'] text-lg uppercase tracking-tight" :class="selectedAddressId === address.id ? 'text-black' : 'text-white'">{{ address.label }}</span>
                                                     <span v-if="address.is_default" class="text-xs px-2 py-1 bg-[#ff0000] text-white uppercase tracking-wide">DEFAULT</span>
                                                 </div>
-                                                <p class="font-medium mb-1">{{ address.recipient_name }}</p>
+                                                <p class="font-medium mb-1" :class="selectedAddressId === address.id ? 'text-black' : 'text-white'">{{ address.recipient_name }}</p>
                                                 <p class="text-sm" :class="selectedAddressId === address.id ? 'text-black/70' : 'text-[#999999]'">
                                                     {{ address.phone }}
                                                 </p>
@@ -210,7 +210,7 @@ onMounted(() => {
                                                 </p>
                                             </div>
                                             <div v-if="selectedAddressId === address.id" class="ml-4">
-                                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg class="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                 </svg>
                                             </div>

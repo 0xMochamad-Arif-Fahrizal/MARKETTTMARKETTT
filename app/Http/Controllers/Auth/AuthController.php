@@ -38,7 +38,7 @@ class AuthController extends Controller
             $cartService = app(\App\Services\CartService::class);
             $cartService->mergeGuestCart($sessionId, $request->user());
 
-            return redirect()->intended('/');
+            return redirect()->intended('/products?from_auth=true');
         }
 
         return back()->withErrors([
@@ -74,7 +74,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect('/products?from_auth=true');
     }
 
     /**

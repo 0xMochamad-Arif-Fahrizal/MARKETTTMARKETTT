@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ProductCard from '@/Components/ProductCard.vue';
 import Sidebar from '@/Components/Sidebar.vue';
 import CategoryList from '@/Components/CategoryList.vue';
 import ShippingPolicyModal from '@/Components/ShippingPolicyModal.vue';
+import LoadingScreen from '@/Components/LoadingScreen.vue';
 
 const props = defineProps({
     products: Object,
@@ -16,15 +17,48 @@ const props = defineProps({
 
 const mobileMenuOpen = ref(false);
 const showShippingModal = ref(false);
+const showLoading = ref(false);
+const contentVisible = ref(false);
 
 const toggleMobileMenu = () => {
     mobileMenuOpen.value = !mobileMenuOpen.value;
 };
+
+const handleLoadingComplete = () => {
+    contentVisible.value = true;
+};
+
+onMounted(() => {
+    // Check if user just logged in or signed up (from session or URL param)
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromAuth = urlParams.get('from_auth') === 'true' || sessionStorage.getItem('show_loading') === 'true';
+    
+    if (fromAuth) {
+        showLoading.value = true;
+        sessionStorage.removeItem('show_loading');
+        
+        // Remove from_auth param from URL
+        if (urlParams.has('from_auth')) {
+            urlParams.delete('from_auth');
+            const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
+            window.history.replaceState({}, '', newUrl);
+        }
+    } else {
+        contentVisible.value = true;
+    }
+});
 </script>
 
 <template>
-    <AppLayout @toggle-mobile-menu="toggleMobileMenu" :mobile-menu-open="mobileMenuOpen">
-        <div class="min-h-screen bg-black flex">
+    <LoadingScreen v-if="showLoading" @loaded="handleLoadingComplete" />
+    
+    <Transition
+        enter-active-class="transition-opacity duration-1000"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+    >
+        <AppLayout v-if="contentVisible" @toggle-mobile-menu="toggleMobileMenu" :mobile-menu-open="mobileMenuOpen">
+            <div class="min-h-screen bg-black flex">
             <!-- Sidebar - Desktop -->
             <Sidebar 
                 :categories="categories"
@@ -46,17 +80,16 @@ const toggleMobileMenu = () => {
             <!-- Main Content -->
             <div class="flex-1 lg:ml-60 w-full">
                 <!-- Header -->
-                <div class="hidden">
+                <div v-if="selectedCategory">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                         <h1 class="text-4xl md:text-5xl font-['OCR_A'] uppercase tracking-tight mb-2">
-                            {{ selectedCategory ? selectedCategory.name : 'MARKETTTMARKETTT' }}
+                            {{ selectedCategory.name }}
                         </h1>
                         <div class="flex items-center justify-between">
                             <p class="text-sm text-[#999999] uppercase tracking-wide">
                                 {{ products.total }} PRODUCTS
                             </p>
                             <button 
-                                v-if="selectedCategory"
                                 @click="router.get('/products')"
                                 class="text-sm text-[#CCFF00] hover:text-white uppercase tracking-wide transition-colors"
                             >
@@ -101,6 +134,6 @@ const toggleMobileMenu = () => {
                     </div>
                 </div>
             </div>
-        </div>
-    </AppLayout>
+        </AppLayout>
+    </Transition>
 </template>

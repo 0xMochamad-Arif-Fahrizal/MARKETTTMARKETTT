@@ -42,11 +42,11 @@ const showShippingModal = ref(false);
     >
         <!-- Logo Section - Always visible on desktop, visible when open on mobile -->
         <div class="mb-8">
-            <Link href="/" class="block">
+            <Link href="/products" class="block">
                 <img 
                     src="/images/logo.png" 
                     alt="MARKETTTMARKETTT" 
-                    class="h-12 w-auto"
+                    class="h-12 w-auto cursor-pointer"
                 />
             </Link>
         </div>
